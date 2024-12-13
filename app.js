@@ -6,6 +6,7 @@ var logger = require('morgan'); // 导入 morgan 模块，用于日志记录
 
 var indexRouter = require('./routes/index'); // 导入路由模块，处理根路径的请求
 var usersRouter = require('./routes/users'); // 导入路由模块，处理 /users 路径的请求
+const UserRouter = require('./routes/admin/UserRouter');
 
 var app = express(); // 创建一个 Express 应用实例
 
@@ -21,16 +22,20 @@ app.use(express.static(path.join(__dirname, 'public'))); // 设置静态文件�
 
 app.use('/', indexRouter); // 使用 indexRouter 处理根路径的请求
 app.use('/users', usersRouter); // 使用 usersRouter 处理 /users 路径的请求
-app.use('/adminapi')
+// app.use('/adminapi')
+
+
+/**
+ * /adminapi/*-后台系统用的
+ * /webapi/*-企业官网用的
+ */
+app.use(UserRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404)); // 如果请求的路径不存在，创建一个 404 错误并传递给错误处理中间件
 });
-/**
- * /adminapi/*-后台系统用的
- * /webapi/*-企业官网用的
- */
+
 
 
 // error handler
