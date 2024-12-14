@@ -39,7 +39,7 @@ app.use((req, res, next) => {
     if (token) {
       try {
         const payload = JWT.verify(token);
-        console.log("验证成功:", payload);
+        // console.log("验证成功:", payload);
         if (payload) {
           const newToken = JWT.generate({ _id: payload._id, username: payload.username }, '1d')
           res.header("Authorization", newToken);
