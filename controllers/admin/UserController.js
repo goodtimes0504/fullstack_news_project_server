@@ -79,6 +79,63 @@ const UserController = {
             })
         }
 
+    },
+    add: async (req, res) => {
+        // console.log(req.body, req.file);
+        const { username, gender, introduction, role, password } = req.body;
+        //调用service层 操作数据库 更新数据
+
+        const avatar = req.file ? `/avataruploads/${req.file.filename}` : ''
+        const result = await UserService.add({ username, gender: Number(gender), introduction, avatar, role: Number(role), password });
+        if (result) {
+            res.send({
+                code: "1",
+                msg: `添加成功`,
+            })
+        }
+
+    },
+    getList: async (req, res) => {
+        const result = await UserService.getList();
+        if (result) {
+            res.send({
+                code: "1",
+                msg: `获取成功`,
+                data: result
+            })
+        }
+    },
+    deleteUser: async (req, res) => {
+        const { id } = req.params; //调用service层 操作数据库 更新数据
+        const result = await UserService.deleteUser(id);
+        if (result) {
+            res.send({
+                code: "1",
+                msg: `删除成功`
+            })
+        } else {
+            res.send({
+                code: "-1",
+                msg: `删除失败`
+            })
+        }
+
+    },
+    updateUser: async (req, res) => {
+
+        const result = await UserService.updateUser(req.body);
+        if (result) {
+            res.send({
+                code: "1",
+                msg: `更新成功`
+            })
+        } else {
+            res.send({
+                code: "-1",
+                msg: `更新失败`
+            })
+        }
+
     }
 };
 module.exports = UserController;
