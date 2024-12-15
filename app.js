@@ -7,6 +7,7 @@ var logger = require("morgan"); // 导入 morgan 模块，用于日志记录
 var indexRouter = require("./routes/index"); // 导入路由模块，处理根路径的请求
 var usersRouter = require("./routes/users"); // 导入路由模块，处理 /users 路径的请求
 const UserRouter = require("./routes/admin/UserRouter");
+const NewsRouter = require("./routes/admin/NewsRouter");
 const JWT = require("./utils/JWT.js");
 var app = express(); // 创建一个 Express 应用实例
 
@@ -84,6 +85,7 @@ app.use((req, res, next) => {
   // }
 });
 app.use(UserRouter);
+app.use(NewsRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
