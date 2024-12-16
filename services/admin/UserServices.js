@@ -12,10 +12,16 @@ const UserService = {
         }
     },
     add: async ({ username, introduction, avatar, gender, role, password }) => {
-        if (avatar) {
-            return UserModel.create({ username, introduction, avatar, gender, role, password })
-        } else {
-            return UserModel.create({ username, introduction, gender, role, password })
+        try {
+            if (avatar) {
+                return UserModel.create({ username, introduction, avatar, gender, role, password })
+            } else {
+                return UserModel.create({ username, introduction, gender, role, password })
+            }
+        }
+        catch (err) {
+            // return { error: err.toString() }
+            return false
         }
     },
     getList: async () => {

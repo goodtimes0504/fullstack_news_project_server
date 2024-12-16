@@ -9,6 +9,10 @@ const NewsType = {
     isPublish: Number, //发布 0是未发布 1是已发布
     editTime: Date, //编辑时间
     //_id不用定义，因为它是主键，由数据库自动生成
+    author: {
+        type: String,
+        ref: 'user' // 这里指定引用的模型名称为'user'，与 UserModel 定义时的名称对应
+    }
 };
 
 // 修复模型定义的语法错误

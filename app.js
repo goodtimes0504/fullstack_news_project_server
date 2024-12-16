@@ -44,7 +44,8 @@ app.use((req, res, next) => {
         if (payload) {
           const newToken = JWT.generate({ _id: payload._id, username: payload.username }, '1d')
           res.header("Authorization", newToken);
-
+          // 增加了req.payload属性 携带token的信息 方便后面使用 比如在路由中使用req.payload._id 来获取用户id
+          req.payload = payload;
           next();
         } else {
           res.status(401).json({
@@ -93,14 +94,14 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message; // 设置错误信息
-  res.locals.error = req.app.get("env") === "development" ? err : {}; // 在开发环境中，设置错误对象
+// app.use(function (err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message; // 设置错误信息
+//   res.locals.error = req.app.get("env") === "development" ? err : {}; // 在开发环境中，设置错误对象
 
-  // render the error page
-  res.status(err.status || 500); // 设置响应状态码
-  res.render("error"); // 渲染错误页面
-});
+//   // render the error page
+//   res.status(err.status || 500); // 设置响应状态码
+//   // res.render("error"); // 渲染错误页面
+// });
 
 module.exports = app; // 导出应用实例，以便在其他地方使用

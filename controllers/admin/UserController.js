@@ -86,13 +86,25 @@ const UserController = {
         //调用service层 操作数据库 更新数据
 
         const avatar = req.file ? `/avataruploads/${req.file.filename}` : ''
-        const result = await UserService.add({ username, gender: Number(gender), introduction, avatar, role: Number(role), password });
-        if (result) {
+        try {
+
+            const result = await UserService.add({ username, gender: Number(gender), introduction, avatar, role: Number(role), password });
             res.send({
                 code: "1",
                 msg: `添加成功`,
+
+            })
+
+        } catch (err) {
+            res.send({
+                code: err.errorResponse.code || "-1",
+                msg: `添加失败`,
+                data: {
+                    err
+                }
             })
         }
+
 
     },
     getList: async (req, res) => {
