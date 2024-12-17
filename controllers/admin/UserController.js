@@ -1,4 +1,4 @@
-const UserService = require("../../services/admin/UserServices");
+const UserService = require("../../services/admin/UserService.js");
 //controllers 层 处理业务逻辑 将需要的数据传递给service层 并且将返回数据给router层
 
 const JWT = require("../../utils/JWT.js");
