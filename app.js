@@ -8,7 +8,9 @@ var indexRouter = require("./routes/index"); // 导入路由模块，处理根�
 var usersRouter = require("./routes/users"); // 导入路由模块，处理 /users 路径的请求
 const UserRouter = require("./routes/admin/UserRouter");
 const NewsRouter = require("./routes/admin/NewsRouter");
+const webNewsRouter = require("./routes/web/NewsRouter");
 const ProductRouter = require("./routes/admin/ProductRouter");
+const webProductRouter = require("./routes/web/ProductRouter");
 const JWT = require("./utils/JWT.js");
 var app = express(); // 创建一个 Express 应用实例
 
@@ -30,6 +32,10 @@ app.use("/users", usersRouter); // 使用 usersRouter 处理 /users 路径的请
  * /adminapi/*-后台系统用的
  * /webapi/*-企业官网用的
  */
+// 企业官网用的路由 因为不需要token校验所以放token校验之前
+app.use(webNewsRouter)
+app.use(webProductRouter)
+// 验证token
 app.use((req, res, next) => {
   //如果token有效next()
   //如果token过期 返回401
